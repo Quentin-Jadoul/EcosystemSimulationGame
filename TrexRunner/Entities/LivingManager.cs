@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace EcosystemSimulation.Entities
@@ -19,11 +20,12 @@ namespace EcosystemSimulation.Entities
 
         public Living _living;
 
+        public List<Vector2> animalPos = new List<Vector2>();
+        public List<Vector2> plantPos = new List<Vector2>();
+
         private readonly EntityManager _entityManager;
 
         private Texture2D _spriteSheet;
-
-        public int i = 0;
 
         public LivingManager(EntityManager entityManager, Texture2D spriteSheet)
         {
@@ -34,9 +36,10 @@ namespace EcosystemSimulation.Entities
 
         public void Initialize()
         {
-            for (int i = 0 ; i <30 ; i++)
+            for (int i = 0 ; i <2 ; i++)
             {
                 SpawnAnimal();
+                SpawnPlant();
             }
             
 
@@ -49,9 +52,13 @@ namespace EcosystemSimulation.Entities
 
         public void Update(GameTime gameTime)
         {
+            animalPos.Clear();
+            plantPos.Clear();
+
             foreach (Living _living in _entityManager.GetEntitiesOfType<Plant>())
             {
-                if (_living.growth == 50)
+                plantPos.Add(_living.Position);
+                if (_living.growth == 2000)
                 {
                     SpawnPlant();
                 }
@@ -59,7 +66,23 @@ namespace EcosystemSimulation.Entities
 
             foreach (Living _living in _entityManager.GetEntitiesOfType<Animal>())
             {
-                
+                animalPos.Add(_living.Position);
+            }
+
+            for (int i = 0; i < animalPos.Count - 1; i++)
+            {
+                for (int j = i + 1; j < animalPos.Count; j++)
+                {
+                    // Use list[i] and list[j]
+                    if (i != j)
+                    {
+                        //Debug.WriteLine(Vector2.Distance(new Vector2(10,10), new Vector2(19,20)));
+                        if (Vector2.Distance(animalPos[i], animalPos[j]) < 100 & animalPos.Count < 30)
+                        {
+                            SpawnAnimal();
+                        }
+                    }
+                }
             }
         }
 
@@ -75,7 +98,7 @@ namespace EcosystemSimulation.Entities
             
             PLANT_START_POS_X = _random.Next(0, 1680 - 24);
             PLANT_START_POS_Y = _random.Next(0, 1000 - 24);
-            _living = new Plant(_spriteSheet, new Vector2(PLANT_START_POS_X, PLANT_START_POS_Y));
+            _living = new Plant(_spriteSheet, new Vector2(PLANT_START_POS_X, PLANT_START_POS_Y), _entityManager);
             _entityManager.AddEntity(_living);
         }
 
@@ -86,7 +109,7 @@ namespace EcosystemSimulation.Entities
 
             PLANT_START_POS_X = _random.Next(0, 1680 - 24);
             PLANT_START_POS_Y = _random.Next(0, 1000 - 24);
-            _living = new Animal(_spriteSheet, new Vector2(PLANT_START_POS_X, PLANT_START_POS_Y));
+            _living = new Animal(_spriteSheet, new Vector2(PLANT_START_POS_X, PLANT_START_POS_Y), _entityManager);
             _entityManager.AddEntity(_living);
         }
     }

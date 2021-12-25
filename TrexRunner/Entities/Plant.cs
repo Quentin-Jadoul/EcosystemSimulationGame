@@ -19,7 +19,7 @@ namespace EcosystemSimulation.Entities
 
         private Sprite _sprite;
 
-        public Plant(Texture2D spriteSheet, Vector2 position) : base(position)
+        public Plant(Texture2D spriteSheet, Vector2 position, EntityManager entityManager) : base(position, entityManager)
         {
             _sprite = new Sprite(spriteSheet, TEXTURE_COORDS_X, TEXTURE_COORDS_Y, SPRITE_WIDTH, SPRITE_HEIGHT);
         }

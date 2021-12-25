@@ -21,7 +21,7 @@ namespace EcosystemSimulation.Entities
 
         private Sprite _sprite;
 
-        public Animal(Texture2D spriteSheet, Vector2 position) : base(position)
+        public Animal(Texture2D spriteSheet, Vector2 position, EntityManager entityManager) : base(position, entityManager)
         {
             _sprite = new Sprite(spriteSheet, TEXTURE_COORDS_X, TEXTURE_COORDS_Y, SPRITE_WIDTH, SPRITE_HEIGHT);
             NEXT_OBJECTIVE = new Vector2(_random.Next(0, 1680 - 39), _random.Next(0, 1000 - 36));
@@ -36,6 +36,14 @@ namespace EcosystemSimulation.Entities
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            foreach (Plant _living in EntityManager.GetEntitiesOfType<Plant>())
+            {
+                if (Vector2.Distance(_living.Position,Position) < 100)
+                {
+                    EntityManager.RemoveEntity(_living);
+                }
+            }
 
             if (Vector2.Subtract(NEXT_OBJECTIVE, Position) != new Vector2(0,0))
             {

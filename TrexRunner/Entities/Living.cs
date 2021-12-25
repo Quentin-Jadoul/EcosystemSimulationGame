@@ -14,9 +14,12 @@ namespace EcosystemSimulation.Entities
         public int growth = 0;
 
         public Vector2 Position { get; set; }
-        protected Living(Vector2 position)
+        public EntityManager EntityManager { get; }
+
+        protected Living(Vector2 position, EntityManager entityManager)
         {
             Position = position;
+            EntityManager = entityManager;
         }
 
         public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
@@ -24,7 +27,7 @@ namespace EcosystemSimulation.Entities
         public virtual void Update(GameTime gameTime)
         {
             growth++;
-            if (growth > 50)
+            if (growth > 1000)
             {
                 growth = 0;
             }
