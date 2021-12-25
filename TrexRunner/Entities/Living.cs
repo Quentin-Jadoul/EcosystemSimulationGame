@@ -11,6 +11,8 @@ namespace EcosystemSimulation.Entities
 
         public int DrawOrder { get; set; }
 
+        public int growth = 0;
+
         public Vector2 Position { get; set; }
         protected Living(Vector2 position)
         {
@@ -21,6 +23,12 @@ namespace EcosystemSimulation.Entities
 
         public void Update(GameTime gameTime)
         {
+            growth++;
+            if (growth > 50)
+            {
+                growth = 0;
+            }
+
         }
     }
 }

@@ -15,14 +15,13 @@ namespace EcosystemSimulation.Entities
         private const int SPRITE_WIDTH = 24;
         private const int SPRITE_HEIGHT = 24;
 
-        private Sprite _sprite;
+        public Vector2 _position;
 
-        public int i = 0;
+        private Sprite _sprite;
 
         public Plant(Texture2D spriteSheet, Vector2 position) : base(position)
         {
             _sprite = new Sprite(spriteSheet, TEXTURE_COORDS_X, TEXTURE_COORDS_Y, SPRITE_WIDTH, SPRITE_HEIGHT);
-
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

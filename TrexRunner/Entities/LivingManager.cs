@@ -45,13 +45,13 @@ namespace EcosystemSimulation.Entities
 
         public void Update(GameTime gameTime)
         {
-            _plant.i++;
-            if (_plant.i == 50)
+            foreach (Living _plant in _entityManager.GetEntitiesOfType<Living>())
             {
-                _plant.i = 0;
-                SpawnLiving();
+                if (_plant.growth == 50)
+                {
+                    SpawnLiving();
+                }
             }
-            
         }
 
         private void SpawnLiving()
@@ -59,7 +59,7 @@ namespace EcosystemSimulation.Entities
             //create instance of living and add it to entityManager
 
             
-            PLANT_START_POS_X = _random.Next(0, 1080);
+            PLANT_START_POS_X = _random.Next(0, 1680 - 24);
             PLANT_START_POS_Y = _random.Next(0, 1000 - 24);
             _plant = new Plant(_spriteSheet, new Vector2(PLANT_START_POS_X, PLANT_START_POS_Y));
             _entityManager.AddEntity(_plant);
