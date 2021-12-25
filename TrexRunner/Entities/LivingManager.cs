@@ -39,9 +39,12 @@ namespace EcosystemSimulation.Entities
             for (int i = 0 ; i <2 ; i++)
             {
                 SpawnAnimal();
+            }
+            for (int i = 0; i < 10; i++)
+            {
                 SpawnPlant();
             }
-            
+
 
         }
 
@@ -84,12 +87,6 @@ namespace EcosystemSimulation.Entities
                     }
                 }
             }
-        }
-
-        private void MoveAnimal()
-        {
-            //_living.Position = new Vector2(_living.Position.X + _random.Next(-5, 6), _living.Position.Y + _random.Next(-5, 6));
-
         }
         private void SpawnPlant()
         {

@@ -37,19 +37,27 @@ namespace EcosystemSimulation.Entities
         {
             base.Update(gameTime);
 
+            CheckForFood();
+
+            MoveAnimal();
+        }
+        private void CheckForFood()
+        {
             foreach (Plant _living in EntityManager.GetEntitiesOfType<Plant>())
             {
-                if (Vector2.Distance(_living.Position,Position) < 100)
+                if (Vector2.Distance(_living.Position, Position) < 100)
                 {
                     EntityManager.RemoveEntity(_living);
                 }
             }
-
-            if (Vector2.Subtract(NEXT_OBJECTIVE, Position) != new Vector2(0,0))
+        }
+        private void MoveAnimal()
+        {
+            if (Vector2.Subtract(NEXT_OBJECTIVE, Position) != new Vector2(0, 0))
             {
                 if (NEXT_OBJECTIVE.X - Position.X > 0)
                 {
-                    Position = new Vector2(Position.X +1, Position.Y);
+                    Position = new Vector2(Position.X + 1, Position.Y);
                 }
                 else if (NEXT_OBJECTIVE.X - Position.X < 0)
                 {
@@ -61,7 +69,7 @@ namespace EcosystemSimulation.Entities
                 }
                 else if (NEXT_OBJECTIVE.Y - Position.Y < 0)
                 {
-                    Position = new Vector2(Position.X, Position.Y -1);
+                    Position = new Vector2(Position.X, Position.Y - 1);
                 }
             }
             else

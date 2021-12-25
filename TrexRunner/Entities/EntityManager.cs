@@ -10,7 +10,7 @@ namespace EcosystemSimulation.Entities
 {
     public class EntityManager
     {
-        private readonly List<IGameEntity> _entities = new List<IGameEntity>();
+        public readonly List<IGameEntity> _entities = new List<IGameEntity>();
 
         private readonly List<IGameEntity> _entitiesToAdd = new List<IGameEntity>();
         private readonly List<IGameEntity> _entitiesToRemove = new List<IGameEntity>();
