@@ -21,7 +21,7 @@ namespace EcosystemSimulation.Entities
 
         public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             growth++;
             if (growth > 50)

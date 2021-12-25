@@ -15,18 +15,54 @@ namespace EcosystemSimulation.Entities
         private const int SPRITE_WIDTH = 39;
         private const int SPRITE_HEIGHT = 36;
 
-        public Vector2 _position;
+        Random _random = new Random();
+
+        public Vector2 NEXT_OBJECTIVE;
 
         private Sprite _sprite;
 
         public Animal(Texture2D spriteSheet, Vector2 position) : base(position)
         {
             _sprite = new Sprite(spriteSheet, TEXTURE_COORDS_X, TEXTURE_COORDS_Y, SPRITE_WIDTH, SPRITE_HEIGHT);
+            NEXT_OBJECTIVE = new Vector2(_random.Next(0, 1680 - 39), _random.Next(0, 1000 - 36));
         }
 
+        
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             _sprite.Draw(spriteBatch, Position);
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (Vector2.Subtract(NEXT_OBJECTIVE, Position) != new Vector2(0,0))
+            {
+                if (NEXT_OBJECTIVE.X - Position.X > 0)
+                {
+                    Position = new Vector2(Position.X +1, Position.Y);
+                }
+                else if (NEXT_OBJECTIVE.X - Position.X < 0)
+                {
+                    Position = new Vector2(Position.X - 1, Position.Y);
+                }
+                if (NEXT_OBJECTIVE.Y - Position.Y > 0)
+                {
+                    Position = new Vector2(Position.X, Position.Y + 1);
+                }
+                else if (NEXT_OBJECTIVE.Y - Position.Y < 0)
+                {
+                    Position = new Vector2(Position.X, Position.Y -1);
+                }
+            }
+            else
+            {
+                NEXT_OBJECTIVE.X = _random.Next(0, 1680 - 39);
+                NEXT_OBJECTIVE.Y = _random.Next(0, 1000 - 36);
+                NEXT_OBJECTIVE = new Vector2(NEXT_OBJECTIVE.X, NEXT_OBJECTIVE.Y);
+            }
+        }
+
     }
 }
