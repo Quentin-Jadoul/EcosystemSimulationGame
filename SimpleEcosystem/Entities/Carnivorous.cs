@@ -25,6 +25,25 @@ namespace EcosystemSimulation.Entities
         {
             base.Update(gameTime);
 
+            CheckForFood();
+        }
+        public override void CheckForFood()
+        {
+            foreach (Animal _animal in EntityManager.GetEntitiesOfType<Animal>())
+            {
+                if (Vector2.Distance(_animal.Position, Position) < ACTION_RADIUS & !_animal._carnivorous)
+                {
+                    _animal.Health -= 10;
+                }
+            }
+            foreach (Meat _meat in EntityManager.GetEntitiesOfType<Meat>())
+            {
+                if (Vector2.Distance(_meat.Position, Position) < ACTION_RADIUS)
+                {
+                    Energy += 1000;
+                    EntityManager.RemoveEntity(_meat);
+                }
+            }
         }
     }
 }

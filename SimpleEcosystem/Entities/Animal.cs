@@ -106,37 +106,17 @@ namespace EcosystemSimulation.Entities
             ENERGY_SPRITE_WIDTH = 3 * Energy / 100;
             _energySprite = new Sprite(_spriteSheet, STAT_TEXTURE_COORDS_X, ENERGY_TEXTURE_COORDS_Y, ENERGY_SPRITE_WIDTH, STAT_SPRITE_HEIGHT);
         }
-        private void CheckForFood()
+        public virtual void CheckForFood()
         {
-            if (_carnivorous)
+            foreach (Plant _living in EntityManager.GetEntitiesOfType<Plant>())
             {
-                foreach (Animal _animal in EntityManager.GetEntitiesOfType<Animal>())
+                if (Vector2.Distance(_living.Position, Position) < ACTION_RADIUS)
                 {
-                    if (Vector2.Distance(_animal.Position, Position) < ACTION_RADIUS & !_animal._carnivorous)
-                    {
-                        _animal.Health -= 10;
-                    }
-                }
-                foreach (Meat _meat in EntityManager.GetEntitiesOfType<Meat>())
-                {
-                    if (Vector2.Distance(_meat.Position, Position) < ACTION_RADIUS)
-                    {
-                        Energy += 1000;
-                        EntityManager.RemoveEntity(_meat);
-                    }
+                    Energy += 1000;
+                    EntityManager.RemoveEntity(_living);
                 }
             }
-            else
-            {
-                foreach (Plant _living in EntityManager.GetEntitiesOfType<Plant>())
-                {
-                    if (Vector2.Distance(_living.Position, Position) < ACTION_RADIUS)
-                    {
-                        Energy += 1000;
-                        EntityManager.RemoveEntity(_living);
-                    }
-                }
-            }
+            
         }
         private void MoveAnimal()
         {
