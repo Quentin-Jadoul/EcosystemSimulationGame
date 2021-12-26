@@ -30,6 +30,14 @@ namespace EcosystemSimulation.Entities
         
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            if (gender == 1)
+            {
+                _sprite.TintColor = Color.Pink;
+            }
+            else if (gender == 0)
+            {
+                _sprite.TintColor = Color.LightBlue;
+            }
             _sprite.Draw(spriteBatch, Position);
         }
 

@@ -19,8 +19,8 @@ namespace EcosystemSimulation.Entities
         public int PLANT_START_POS_Y;
 
         public Living _living;
+        public Food _food;
 
-        public List<Vector2> animalPos = new List<Vector2>();
         public List<Vector2> plantPos = new List<Vector2>();
 
         private readonly EntityManager _entityManager;
@@ -36,7 +36,7 @@ namespace EcosystemSimulation.Entities
 
         public void Initialize()
         {
-            for (int i = 0 ; i <2 ; i++)
+            for (int i = 0 ; i <5 ; i++)
             {
                 SpawnAnimal();
             }
@@ -55,13 +55,12 @@ namespace EcosystemSimulation.Entities
 
         public void Update(GameTime gameTime)
         {
-            animalPos.Clear();
             plantPos.Clear();
 
             foreach (Living _living in _entityManager.GetEntitiesOfType<Plant>())
             {
                 plantPos.Add(_living.Position);
-                if (_living.growth == 2000)
+                if (_living.growth == 101)
                 {
                     SpawnPlant();
                 }
@@ -69,30 +68,30 @@ namespace EcosystemSimulation.Entities
 
             foreach (Living _living in _entityManager.GetEntitiesOfType<Animal>())
             {
-                animalPos.Add(_living.Position);
-            }
-
-            for (int i = 0; i < animalPos.Count - 1; i++)
-            {
-                for (int j = i + 1; j < animalPos.Count; j++)
+                if (_living.digestion == 100)
                 {
-                    // Use list[i] and list[j]
-                    if (i != j)
+                    SpawnPoop(_living);
+                }
+
+                foreach (Living _living2 in _entityManager.GetEntitiesOfType<Animal>())
+                {
+                    if (Vector2.Distance(_living.Position, _living2.Position) < 100 & (_entityManager._entities.Count < 30) &  (_living.gender != _living2.gender))
                     {
-                        //Debug.WriteLine(Vector2.Distance(new Vector2(10,10), new Vector2(19,20)));
-                        if (Vector2.Distance(animalPos[i], animalPos[j]) < 100 & animalPos.Count < 30)
-                        {
-                            SpawnAnimal();
-                        }
+                        SpawnAnimal();
                     }
                 }
             }
         }
+
+        private void SpawnPoop(Living _living)
+        {
+            //create instance of living and add it to entityManager
+            _food = new Poop(_spriteSheet, _living.Position);
+            _entityManager.AddEntity(_food);
+        }
         private void SpawnPlant()
         {
             //create instance of living and add it to entityManager
-
-            
             PLANT_START_POS_X = _random.Next(0, 1680 - 24);
             PLANT_START_POS_Y = _random.Next(0, 1000 - 24);
             _living = new Plant(_spriteSheet, new Vector2(PLANT_START_POS_X, PLANT_START_POS_Y), _entityManager);
