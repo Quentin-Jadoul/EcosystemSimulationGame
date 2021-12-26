@@ -12,7 +12,7 @@ namespace EcosystemSimulation.Entities
 
         public Random _random;
 
-        public Living _living;
+        public Animal _living;
         public Food _food;
 
         private readonly EntityManager _entityManager;
@@ -34,7 +34,9 @@ namespace EcosystemSimulation.Entities
             for (int i = 0; i < 5; i++)
             {
                 SpawnAnimal();
+                SpawnFox();
             }
+            
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -46,6 +48,7 @@ namespace EcosystemSimulation.Entities
         {
             foreach (Animal _animal in _entityManager.GetEntitiesOfType<Animal>())
             {
+
                 if (_animal.DIGESTION_TIME_MAX == _animal.DIGESTION_TIME)
                 {
                     SpawnPoop(_animal);
@@ -58,13 +61,13 @@ namespace EcosystemSimulation.Entities
                     {
                         _animal.GESTATION_TIME = 0;
                         _animal.PREGNANT = false;
-                        GiveBirth(_animal.Position);
+                        GiveBirth(_animal.Position, _animal._carnivorous);
                     }
                 }
 
                 foreach (Animal _animal2 in _entityManager.GetEntitiesOfType<Animal>())
                 {
-                    if (Vector2.Distance(_animal.Position, _animal2.Position) < 100 & (_entityManager._entities.Count < 30) & (_animal.gender != _animal2.gender))
+                    if (Vector2.Distance(_animal.Position, _animal2.Position) < 100 & (_animal.gender != _animal2.gender) & (_animal._carnivorous == _animal2._carnivorous))
                     {
                         if (_animal.gender == 1)
                         {
@@ -86,9 +89,17 @@ namespace EcosystemSimulation.Entities
             _entityManager.AddEntity(_food);
         }
 
-        private void GiveBirth(Vector2 position)
+        private void GiveBirth(Vector2 position, bool carnivorous)
         {
-            _living = new Animal(_spriteSheet, position, _entityManager);
+            if (carnivorous)
+            {
+                _living = new Carnivorous(_spriteSheet, position, _entityManager);
+                _living._carnivorous = true;
+            }
+            else
+            {
+                _living = new Animal(_spriteSheet, position, _entityManager);
+            }
             _entityManager.AddEntity(_living);
         }
         private void SpawnAnimal()
@@ -101,5 +112,17 @@ namespace EcosystemSimulation.Entities
             _living = new Animal(_spriteSheet, new Vector2(START_POS_X, START_POS_Y), _entityManager);
             _entityManager.AddEntity(_living);
         }
+        private void SpawnFox()
+        {
+            //create instance of animal and add it to entityManager
+
+
+            START_POS_X = _random.Next(0, 1680 - 24);
+            START_POS_Y = _random.Next(0, 1000 - 24);
+            _living = new Carnivorous(_spriteSheet, new Vector2(START_POS_X, START_POS_Y), _entityManager);
+            _living._carnivorous = true;
+            _entityManager.AddEntity(_living);
+        }
     }
+
 }
