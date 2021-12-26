@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SimpleEcosystem;
 
 namespace EcosystemSimulation.Entities
 {
@@ -12,7 +13,7 @@ namespace EcosystemSimulation.Entities
 
         public Random _random;
 
-        Vector2 spawnAreaSize = new Vector2(1680 - 24, 1000 - 24);
+        Vector2 spawnAreaSize = new Vector2(EcosystemSimulationGame.WINDOW_WIDTH, EcosystemSimulationGame.WINDOW_HEIGHT);
 
         public Living _living;
 

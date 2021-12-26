@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
-namespace TrexRunner
+namespace SimpleEcosystem
 {
     public class EcosystemSimulationGame : Game
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TrexRunner
+namespace SimpleEcosystem
 {
     public static class Program
     {
