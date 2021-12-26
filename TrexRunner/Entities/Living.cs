@@ -10,28 +10,31 @@ namespace EcosystemSimulation.Entities
     {
 
         public int DrawOrder { get; set; }
-
-        public int growth = 0;
-
-        private Random _random = new Random();
         public Vector2 Position { get; set; }
         public EntityManager EntityManager { get; }
+
+        public int Health { get; set; }
+        public int Energy { get; set; }
 
         protected Living(Vector2 position, EntityManager entityManager)
         {
             Position = position;
             EntityManager = entityManager;
+            Health = 1000;
+            Energy = 100;
         }
 
         public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
         public virtual void Update(GameTime gameTime)
         {
-            growth++;
-            if (growth > 100)
-            {
-                growth = 0;
-            }
+            Health--;
+            
+        }
+
+        public void Test()
+        {
+
         }
     }
 }

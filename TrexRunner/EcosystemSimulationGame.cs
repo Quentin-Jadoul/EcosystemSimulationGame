@@ -23,6 +23,8 @@ namespace TrexRunner
         private AnimalManager _animalManager;
 
         private EntityManager _entityManager;
+        private LivingManager _livingManager;
+
         public EcosystemSimulationGame()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -57,7 +59,10 @@ namespace TrexRunner
             _plantManager = new PlantManager(_entityManager, _spriteSheetTexture);
             _plantManager.Initialize();
 
+            _livingManager = new LivingManager(_entityManager, _spriteSheetTexture);
+
             _entityManager.AddEntity(_plantManager);
+            _entityManager.AddEntity(_livingManager);
 
         }
 

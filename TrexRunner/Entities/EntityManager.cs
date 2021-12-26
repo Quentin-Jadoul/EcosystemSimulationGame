@@ -18,7 +18,6 @@ namespace EcosystemSimulation.Entities
 
         public void Update(GameTime gameTime)
         {
-
             foreach (IGameEntity entity in _entities)
             {
 
@@ -38,6 +37,7 @@ namespace EcosystemSimulation.Entities
             {
                 _entities.Remove(entity);
             }
+
 
             _entitiesToAdd.Clear();
             _entitiesToRemove.Clear();

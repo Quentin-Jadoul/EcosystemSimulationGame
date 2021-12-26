@@ -84,11 +84,24 @@ namespace EcosystemSimulation.Entities
         }
         private void CheckForFood()
         {
-            foreach (Plant _living in EntityManager.GetEntitiesOfType<Plant>())
+            if (_carnivorous)
             {
-                if (Vector2.Distance(_living.Position, Position) < 100)
+                foreach (Animal _animal in EntityManager.GetEntitiesOfType<Animal>())
                 {
-                    EntityManager.RemoveEntity(_living);
+                    if (Vector2.Distance(_animal.Position, Position) < 100 & !_animal._carnivorous)
+                    {
+                        EntityManager.RemoveEntity(_animal);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Plant _living in EntityManager.GetEntitiesOfType<Plant>())
+                {
+                    if (Vector2.Distance(_living.Position, Position) < 100)
+                    {
+                        EntityManager.RemoveEntity(_living);
+                    }
                 }
             }
         }
