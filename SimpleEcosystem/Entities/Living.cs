@@ -21,14 +21,20 @@ namespace EcosystemSimulation.Entities
             Position = position;
             EntityManager = entityManager;
             Health = 1000;
-            Energy = 100;
+            Energy = 1000;
         }
 
         public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
         public virtual void Update(GameTime gameTime)
         {
-            Health--;
+            if (Energy > 0){
+                Energy--;
+            }
+            else if (Energy == 0)
+            {
+                Health--;
+            }
             
         }
 

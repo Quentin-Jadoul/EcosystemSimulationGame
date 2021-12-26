@@ -53,6 +53,7 @@ namespace EcosystemSimulation.Entities
             {
                 if (Vector2.Distance(_poop.Position, Position) < PLANT_ROOT_RADIUS)
                 {
+                    Energy += 1000;
                     EntityManager.RemoveEntity(_poop);
                 }
             }

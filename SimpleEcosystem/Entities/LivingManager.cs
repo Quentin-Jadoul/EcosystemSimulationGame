@@ -14,6 +14,8 @@ namespace EcosystemSimulation.Entities
 
         private Texture2D _spriteSheet;
 
+        public Food _food;
+
         public LivingManager(EntityManager entityManager, Texture2D spriteSheet)
         {
             _entityManager = entityManager;
@@ -29,10 +31,16 @@ namespace EcosystemSimulation.Entities
         {
             foreach (Living _living in _entityManager.GetEntitiesOfType<Living>())
             {
-                if(_living.Health == 0)
+                if(_living.Health <= 0)
                 {
+                    if (_living is Animal)
+                    {
+                        _food = new Meat(_spriteSheet, _living.Position);
+                        _entityManager.AddEntity(_food);
+                    }
                     //_living.Energy--;
                     _entityManager.RemoveEntity(_living);
+                    
                 }
             }
         }

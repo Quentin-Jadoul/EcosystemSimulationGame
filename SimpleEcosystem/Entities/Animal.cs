@@ -9,17 +9,19 @@ namespace EcosystemSimulation.Entities
 {
     public class Animal : Living
     {
-        private const int HERBIVOROUS_TEXTURE_COORDS_X = 84;
-        private const int HERBIVOROUS_TEXTURE_COORDS_Y = 30;
+        private const int TEXTURE_COORDS_X = 84;
+        private const int TEXTURE_COORDS_Y = 30;
 
-        private const int HERBIVOROUS_SPRITE_WIDTH = 39;
-        private const int HERBIVOROUS_SPRITE_HEIGHT = 36;
+        private const int SPRITE_WIDTH = 39;
+        private const int SPRITE_HEIGHT = 36;
 
         private const int STAT_TEXTURE_COORDS_X = 213;
 
-        private const int STAT_SPRITE_WIDTH = 30;
+        
         private const int STAT_SPRITE_HEIGHT = 3;
 
+        private int HEALTH_SPRITE_WIDTH = 30;
+        private int ENERGY_SPRITE_WIDTH = 30;
         private const int HEALTH_TEXTURE_COORDS_Y = 57;
         private const int ENERGY_TEXTURE_COORDS_Y = 51;
 
@@ -39,19 +41,21 @@ namespace EcosystemSimulation.Entities
         public int gender { get; } //0 = male , 1 = female
 
         public Sprite _sprite { get; set; }
-        public Sprite _energySprite;
-        public Sprite _healthSprite;
+        public Sprite _energySprite { get; set; }
+        public Sprite _healthSprite { get; set; }
 
         public bool _carnivorous { get; set; }
+
+        private Texture2D _spriteSheet;
 
         public Animal(Texture2D spriteSheet, Vector2 position, EntityManager entityManager) : base(position, entityManager)
         {
             _carnivorous = false;
-            _sprite = new Sprite(spriteSheet, HERBIVOROUS_TEXTURE_COORDS_X, HERBIVOROUS_TEXTURE_COORDS_Y, HERBIVOROUS_SPRITE_WIDTH, HERBIVOROUS_SPRITE_HEIGHT);
-            
+            _spriteSheet = spriteSheet;
+            _sprite = new Sprite(spriteSheet, TEXTURE_COORDS_X, TEXTURE_COORDS_Y, SPRITE_WIDTH, SPRITE_HEIGHT);
 
-            _energySprite = new Sprite(spriteSheet, STAT_TEXTURE_COORDS_X, ENERGY_TEXTURE_COORDS_Y, STAT_SPRITE_WIDTH, STAT_SPRITE_HEIGHT);
-            _healthSprite = new Sprite(spriteSheet, STAT_TEXTURE_COORDS_X, HEALTH_TEXTURE_COORDS_Y, STAT_SPRITE_WIDTH, STAT_SPRITE_HEIGHT);
+            _energySprite = new Sprite(spriteSheet, STAT_TEXTURE_COORDS_X, ENERGY_TEXTURE_COORDS_Y, ENERGY_SPRITE_WIDTH, STAT_SPRITE_HEIGHT);
+            _healthSprite = new Sprite(spriteSheet, STAT_TEXTURE_COORDS_X, HEALTH_TEXTURE_COORDS_Y, HEALTH_SPRITE_WIDTH, STAT_SPRITE_HEIGHT);
             NEXT_OBJECTIVE = new Vector2(_random.Next(0, 1680 - 39), _random.Next(0, 1000 - 36));
             gender = _random.Next(0, 2);
         }
@@ -67,8 +71,17 @@ namespace EcosystemSimulation.Entities
                 _sprite.TintColor = Color.LightBlue;
             }
             _sprite.Draw(spriteBatch, Position);
-            _energySprite.Draw(spriteBatch, new Vector2(Position.X,Position.Y + 42));
-            _healthSprite.Draw(spriteBatch, new Vector2(Position.X,Position.Y + 48));
+            if (_carnivorous)
+            {
+                _energySprite.Draw(spriteBatch, new Vector2(Position.X + 15, Position.Y + 48));
+                _healthSprite.Draw(spriteBatch, new Vector2(Position.X + 15, Position.Y + 54));
+            }
+            else
+            {
+                _energySprite.Draw(spriteBatch, new Vector2(Position.X +5, Position.Y + 42));
+                _healthSprite.Draw(spriteBatch, new Vector2(Position.X +5, Position.Y + 48));
+            }
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -80,10 +93,18 @@ namespace EcosystemSimulation.Entities
             {
                 DIGESTION_TIME = 0;
             }
+            UpdateHUD();
 
             CheckForFood();
 
             MoveAnimal();
+        }
+        private void UpdateHUD()
+        {
+            HEALTH_SPRITE_WIDTH = 3 * Health / 100;
+            _healthSprite = new Sprite(_spriteSheet, STAT_TEXTURE_COORDS_X, HEALTH_TEXTURE_COORDS_Y, HEALTH_SPRITE_WIDTH, STAT_SPRITE_HEIGHT);
+            ENERGY_SPRITE_WIDTH = 3 * Energy / 100;
+            _energySprite = new Sprite(_spriteSheet, STAT_TEXTURE_COORDS_X, ENERGY_TEXTURE_COORDS_Y, ENERGY_SPRITE_WIDTH, STAT_SPRITE_HEIGHT);
         }
         private void CheckForFood()
         {
@@ -93,7 +114,15 @@ namespace EcosystemSimulation.Entities
                 {
                     if (Vector2.Distance(_animal.Position, Position) < ACTION_RADIUS & !_animal._carnivorous)
                     {
-                        EntityManager.RemoveEntity(_animal);
+                        _animal.Health -= 10;
+                    }
+                }
+                foreach (Meat _meat in EntityManager.GetEntitiesOfType<Meat>())
+                {
+                    if (Vector2.Distance(_meat.Position, Position) < ACTION_RADIUS)
+                    {
+                        Energy += 1000;
+                        EntityManager.RemoveEntity(_meat);
                     }
                 }
             }
@@ -103,6 +132,7 @@ namespace EcosystemSimulation.Entities
                 {
                     if (Vector2.Distance(_living.Position, Position) < ACTION_RADIUS)
                     {
+                        Energy += 1000;
                         EntityManager.RemoveEntity(_living);
                     }
                 }
