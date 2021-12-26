@@ -19,7 +19,8 @@ namespace TrexRunner
         private SpriteBatch _spriteBatch;
 
         private Texture2D _spriteSheetTexture;
-        private LivingManager _livingManager;
+        private PlantManager _plantManager;
+        private AnimalManager _animalManager;
 
         private EntityManager _entityManager;
         public EcosystemSimulationGame()
@@ -48,10 +49,15 @@ namespace TrexRunner
 
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
 
-            _livingManager = new LivingManager(_entityManager, _spriteSheetTexture);
-            _livingManager.Initialize();
+            _animalManager = new AnimalManager(_entityManager, _spriteSheetTexture);
+            _animalManager.Initialize();
 
-            _entityManager.AddEntity(_livingManager);
+            _entityManager.AddEntity(_animalManager);
+
+            _plantManager = new PlantManager(_entityManager, _spriteSheetTexture);
+            _plantManager.Initialize();
+
+            _entityManager.AddEntity(_plantManager);
 
         }
 

@@ -15,9 +15,13 @@ namespace EcosystemSimulation.Entities
         private const int SPRITE_WIDTH = 39;
         private const int SPRITE_HEIGHT = 36;
 
+        public const int DIGESTION_TIME = 500;
+
         Random _random = new Random();
 
         public Vector2 NEXT_OBJECTIVE;
+
+        public int gender { get; } //0 = male , 1 = female
 
         private Sprite _sprite;
 
@@ -25,6 +29,7 @@ namespace EcosystemSimulation.Entities
         {
             _sprite = new Sprite(spriteSheet, TEXTURE_COORDS_X, TEXTURE_COORDS_Y, SPRITE_WIDTH, SPRITE_HEIGHT);
             NEXT_OBJECTIVE = new Vector2(_random.Next(0, 1680 - 39), _random.Next(0, 1000 - 36));
+            gender = _random.Next(0, 2);
         }
 
         

@@ -16,14 +16,12 @@ namespace EcosystemSimulation.Entities
 
         private Random _random = new Random();
         public Vector2 Position { get; set; }
-        public int gender { get; } //0 = male , 1 = female
         public EntityManager EntityManager { get; }
 
         protected Living(Vector2 position, EntityManager entityManager)
         {
             Position = position;
             EntityManager = entityManager;
-            gender = _random.Next(0, 2);
         }
 
         public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
