@@ -29,15 +29,18 @@ namespace EcosystemSimulation.Entities
         public int GESTATION_TIME;
         public bool PREGNANT;
 
+        public const int VIEW_RADIUS = 300;
+        public const int ACTION_RADIUS = 100;
+
         Random _random = new Random();
 
         public Vector2 NEXT_OBJECTIVE;
 
         public int gender { get; } //0 = male , 1 = female
 
-        private Sprite _sprite;
-        private Sprite _energySprite;
-        private Sprite _healthSprite;
+        public Sprite _sprite { get; set; }
+        public Sprite _energySprite;
+        public Sprite _healthSprite;
 
         public bool _carnivorous { get; set; }
 
@@ -88,7 +91,7 @@ namespace EcosystemSimulation.Entities
             {
                 foreach (Animal _animal in EntityManager.GetEntitiesOfType<Animal>())
                 {
-                    if (Vector2.Distance(_animal.Position, Position) < 100 & !_animal._carnivorous)
+                    if (Vector2.Distance(_animal.Position, Position) < ACTION_RADIUS & !_animal._carnivorous)
                     {
                         EntityManager.RemoveEntity(_animal);
                     }
@@ -98,7 +101,7 @@ namespace EcosystemSimulation.Entities
             {
                 foreach (Plant _living in EntityManager.GetEntitiesOfType<Plant>())
                 {
-                    if (Vector2.Distance(_living.Position, Position) < 100)
+                    if (Vector2.Distance(_living.Position, Position) < ACTION_RADIUS)
                     {
                         EntityManager.RemoveEntity(_living);
                     }

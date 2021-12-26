@@ -67,7 +67,7 @@ namespace EcosystemSimulation.Entities
 
                 foreach (Animal _animal2 in _entityManager.GetEntitiesOfType<Animal>())
                 {
-                    if (Vector2.Distance(_animal.Position, _animal2.Position) < 100 & (_animal.gender != _animal2.gender) & (_animal._carnivorous == _animal2._carnivorous))
+                    if (Vector2.Distance(_animal.Position, _animal2.Position) < Animal.ACTION_RADIUS & (_animal.gender != _animal2.gender) & (_animal._carnivorous == _animal2._carnivorous))
                     {
                         if (_animal.gender == 1)
                         {
@@ -94,7 +94,6 @@ namespace EcosystemSimulation.Entities
             if (carnivorous)
             {
                 _living = new Carnivorous(_spriteSheet, position, _entityManager);
-                _living._carnivorous = true;
             }
             else
             {
@@ -120,7 +119,6 @@ namespace EcosystemSimulation.Entities
             START_POS_X = _random.Next(0, 1680 - 24);
             START_POS_Y = _random.Next(0, 1000 - 24);
             _living = new Carnivorous(_spriteSheet, new Vector2(START_POS_X, START_POS_Y), _entityManager);
-            _living._carnivorous = true;
             _entityManager.AddEntity(_living);
         }
     }

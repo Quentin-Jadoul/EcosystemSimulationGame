@@ -12,8 +12,6 @@ namespace EcosystemSimulation.Entities
 
         public Random _random;
 
-        public int PLANT_SEED_RADIUS = 100;
-
         public int PLANT_START_POS_X;
         public int PLANT_START_POS_Y;
 
@@ -58,8 +56,8 @@ namespace EcosystemSimulation.Entities
         private void SpawnPlant(Vector2 motherPosition)
         {
             //create instance of living and add it to entityManager
-            PLANT_START_POS_X = ((int)motherPosition.X) + _random.Next(-PLANT_SEED_RADIUS, PLANT_SEED_RADIUS);
-            PLANT_START_POS_Y = ((int)motherPosition.Y) + _random.Next(-PLANT_SEED_RADIUS, PLANT_SEED_RADIUS);
+            PLANT_START_POS_X = ((int)motherPosition.X) + _random.Next(-Plant.PLANT_SEED_RADIUS, Plant.PLANT_SEED_RADIUS);
+            PLANT_START_POS_Y = ((int)motherPosition.Y) + _random.Next(-Plant.PLANT_SEED_RADIUS, Plant.PLANT_SEED_RADIUS);
             Vector2 spawnTryPosition = new Vector2(PLANT_START_POS_X,PLANT_START_POS_Y);
             _living = new Plant(_spriteSheet, Vector2.Clamp(spawnTryPosition, new Vector2(0, 0), spawnAreaSize), _entityManager);
             _entityManager.AddEntity(_living);

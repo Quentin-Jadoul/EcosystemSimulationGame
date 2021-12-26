@@ -19,6 +19,7 @@ namespace EcosystemSimulation.Entities
         public int GROWTH_TIME;
 
         public const int PLANT_ROOT_RADIUS = 200;
+        public const int PLANT_SEED_RADIUS = 200;
 
         public Vector2 _position;
 

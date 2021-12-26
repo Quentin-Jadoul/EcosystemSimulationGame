@@ -15,30 +15,16 @@ namespace EcosystemSimulation.Entities
         private const int CARNIVOROUS_SPRITE_WIDTH = 60;
         private const int CARNIVOROUS_SPRITE_HEIGHT = 45;
 
-        private Sprite _sprite;
-
         public Carnivorous(Texture2D spriteSheet, Vector2 position, EntityManager entityManager) : base(spriteSheet, position, entityManager)
         {   
             _sprite = new Sprite(spriteSheet, CARNIVOROUS_TEXTURE_COORDS_X, CARNIVOROUS_TEXTURE_COORDS_Y, CARNIVOROUS_SPRITE_WIDTH, CARNIVOROUS_SPRITE_HEIGHT);
+            _carnivorous = true;
         }
 
         public override void Update(GameTime gameTime)
         {
-            this._carnivorous = true;
             base.Update(gameTime);
-        }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            if (gender == 1)
-            {
-                _sprite.TintColor = Color.Pink;
-            }
-            else if (gender == 0)
-            {
-                _sprite.TintColor = Color.LightBlue;
-            }
-            _sprite.Draw(spriteBatch, Position);
         }
     }
 }
