@@ -12,10 +12,12 @@ namespace EcosystemSimulation.Entities
 
         public Random _random;
 
-        public const int PLANT_SEED_RADIUS = 50;
+        public int PLANT_SEED_RADIUS = 100;
 
         public int PLANT_START_POS_X;
         public int PLANT_START_POS_Y;
+
+        Vector2 spawnAreaSize = new Vector2(1680 - 24, 1000 - 24);
 
         public Living _living;
 
@@ -34,7 +36,7 @@ namespace EcosystemSimulation.Entities
         {
             for (int i = 0; i < 10; i++)
             {
-                SpawnPlant();
+                SpawnPlant(new Vector2(_random.Next(0, 1680 - 24), _random.Next(0, 1000 - 24)));
             }
         }
 
@@ -45,20 +47,21 @@ namespace EcosystemSimulation.Entities
 
         public void Update(GameTime gameTime)
         {
-            foreach (Living _living in _entityManager.GetEntitiesOfType<Plant>())
+            foreach (Plant _plant in _entityManager.GetEntitiesOfType<Plant>())
             {
-                if (_living.growth == 101)
+                if (_plant.GROWTH_TIME == _plant.GROWTH_TIME_MAX)
                 {
-                    SpawnPlant();
+                    SpawnPlant(_plant.Position);
                 }
             }
         }
-        private void SpawnPlant()
+        private void SpawnPlant(Vector2 motherPosition)
         {
             //create instance of living and add it to entityManager
-            PLANT_START_POS_X = _random.Next(0, 1680 - 24);
-            PLANT_START_POS_Y = _random.Next(0, 1000 - 24);
-            _living = new Plant(_spriteSheet, new Vector2(PLANT_START_POS_X, PLANT_START_POS_Y), _entityManager);
+            PLANT_START_POS_X = ((int)motherPosition.X) + _random.Next(-PLANT_SEED_RADIUS, PLANT_SEED_RADIUS);
+            PLANT_START_POS_Y = ((int)motherPosition.Y) + _random.Next(-PLANT_SEED_RADIUS, PLANT_SEED_RADIUS);
+            Vector2 spawnTryPosition = new Vector2(PLANT_START_POS_X,PLANT_START_POS_Y);
+            _living = new Plant(_spriteSheet, Vector2.Clamp(spawnTryPosition, new Vector2(0, 0), spawnAreaSize), _entityManager);
             _entityManager.AddEntity(_living);
         }
     }

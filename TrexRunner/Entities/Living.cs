@@ -12,7 +12,6 @@ namespace EcosystemSimulation.Entities
         public int DrawOrder { get; set; }
 
         public int growth = 0;
-        public int digestion = 0;
 
         private Random _random = new Random();
         public Vector2 Position { get; set; }
@@ -28,17 +27,11 @@ namespace EcosystemSimulation.Entities
 
         public virtual void Update(GameTime gameTime)
         {
-            digestion++;
-            if (digestion > 100)
-            {
-                digestion = 0;
-            }
             growth++;
             if (growth > 100)
             {
                 growth = 0;
             }
-
         }
     }
 }

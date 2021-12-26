@@ -46,16 +46,34 @@ namespace EcosystemSimulation.Entities
         {
             foreach (Animal _animal in _entityManager.GetEntitiesOfType<Animal>())
             {
-                if (_animal.digestion == 100)
+                if (_animal.DIGESTION_TIME_MAX == _animal.DIGESTION_TIME)
                 {
                     SpawnPoop(_animal);
+                }
+
+                if (_animal.PREGNANT)
+                {
+                    _animal.GESTATION_TIME++;
+                    if (_animal.GESTATION_TIME == _animal.GESTATION_TIME_MAX)
+                    {
+                        _animal.GESTATION_TIME = 0;
+                        _animal.PREGNANT = false;
+                        GiveBirth(_animal.Position);
+                    }
                 }
 
                 foreach (Animal _animal2 in _entityManager.GetEntitiesOfType<Animal>())
                 {
                     if (Vector2.Distance(_animal.Position, _animal2.Position) < 100 & (_entityManager._entities.Count < 30) & (_animal.gender != _animal2.gender))
                     {
-                        SpawnAnimal();
+                        if (_animal.gender == 1)
+                        {
+                            _animal.PREGNANT = true;
+                        }
+                        else if (_animal.gender == 1)
+                        {
+                            _animal2.PREGNANT = true;
+                        }
                     }
                 }
             }
@@ -66,6 +84,12 @@ namespace EcosystemSimulation.Entities
             //create instance of food and add it to entityManager
             _food = new Poop(_spriteSheet, _animal.Position);
             _entityManager.AddEntity(_food);
+        }
+
+        private void GiveBirth(Vector2 position)
+        {
+            _living = new Animal(_spriteSheet, position, _entityManager);
+            _entityManager.AddEntity(_living);
         }
         private void SpawnAnimal()
         {

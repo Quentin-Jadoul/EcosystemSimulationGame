@@ -15,6 +15,11 @@ namespace EcosystemSimulation.Entities
         private const int SPRITE_WIDTH = 24;
         private const int SPRITE_HEIGHT = 24;
 
+        public int GROWTH_TIME_MAX = 1000;
+        public int GROWTH_TIME;
+
+        public const int PLANT_ROOT_RADIUS = 200;
+
         public Vector2 _position;
 
         private Sprite _sprite;
@@ -27,6 +32,29 @@ namespace EcosystemSimulation.Entities
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             _sprite.Draw(spriteBatch, Position);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            GROWTH_TIME++;
+            if (GROWTH_TIME > GROWTH_TIME_MAX)
+            {
+                GROWTH_TIME = 0;
+            }
+
+            CheckForFood();
+        }
+        private void CheckForFood()
+        {
+            foreach (Poop _poop in EntityManager.GetEntitiesOfType<Poop>())
+            {
+                if (Vector2.Distance(_poop.Position, Position) < PLANT_ROOT_RADIUS)
+                {
+                    EntityManager.RemoveEntity(_poop);
+                }
+            }
         }
     }
 }

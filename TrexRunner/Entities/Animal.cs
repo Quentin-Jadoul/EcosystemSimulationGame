@@ -15,7 +15,11 @@ namespace EcosystemSimulation.Entities
         private const int SPRITE_WIDTH = 39;
         private const int SPRITE_HEIGHT = 36;
 
-        public const int DIGESTION_TIME = 500;
+        public int DIGESTION_TIME = 0;
+        public int DIGESTION_TIME_MAX = 500;
+        public int GESTATION_TIME_MAX = 500;
+        public int GESTATION_TIME;
+        public bool PREGNANT;
 
         Random _random = new Random();
 
@@ -49,6 +53,12 @@ namespace EcosystemSimulation.Entities
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            DIGESTION_TIME++;
+            if (DIGESTION_TIME > DIGESTION_TIME_MAX)
+            {
+                DIGESTION_TIME = 0;
+            }
 
             CheckForFood();
 
