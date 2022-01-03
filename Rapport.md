@@ -1,7 +1,7 @@
 
-Quentin Jadoul—Imane Ourraoui
+<p align=right> Quentin Jadoul—Imane Ourraoui
 
-18155-18316
+18155-18316 </p>
 
 
 <p align=center> <strong> UML Diagram</strong>  </p>
