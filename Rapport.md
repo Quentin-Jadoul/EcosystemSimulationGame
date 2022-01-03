@@ -3,9 +3,7 @@ Quentin Jadoul—Imane Ourraoui
 
 18155-18316
 
-<img src="SequenceDiagram.png"
-     
-      />
+<img src="SequenceDiagram.png"/>
 
 
 
