@@ -3,7 +3,7 @@
 
 <p align=right> 18155-18316 </p>
 
-<p align=center> <font size="10"> <strong> Game Interface</strong>  </font></p>
+<p align=center font size="10"> <strong> Game Interface</strong>  </font></p>
 <p align=center> <img src="Interface.png"/></p>
 
 <p align=center> <strong> UML Diagram</strong>  </p>
