@@ -3,7 +3,17 @@ Quentin Jadoul—Imane Ourraoui
 
 18155-18316
 
+
+UML Diagram
+Class Diagram
+
+<img src="ClassDiagram.png"/>
+
+Sequence Diagram
 <img src="SequenceDiagram.png"/>
+
+
+
 
 
 
