@@ -3,6 +3,8 @@
 
 <p align=right> 18155-18316 </p>
 
+<p align=center> <strong> Game Interface</strong>  </p>
+<img src="Interface.png"/>
 
 <p align=center> <strong> UML Diagram</strong>  </p>
 <p><strong>Class Diagram</strong> </p>
@@ -18,16 +20,9 @@
 
 
 
+<p align=center> <strong> Description des principes SOLID utilisés dans notre projet </strong>  </p>
 
 
-
-
-
-
-
-
-
-Description des principes SOLID utilisés dans notre projet :
 
 1. Principe ouvert/fermé :
 
