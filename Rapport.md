@@ -3,13 +3,11 @@ Quentin Jadoul—Imane Ourraoui
 
 18155-18316
 
-<img src="C:\Users\Imane\Documents\Ecam\Q1 202122\1.Software1\ecosys\SequenceDiagram.png"
+<img src="SequenceDiagram.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Here's an image of a drag racer in action:
 
-![Drag Racing](Dragster.jpg)
 
 
 
