@@ -4,12 +4,12 @@ Quentin Jadoul—Imane Ourraoui
 18155-18316
 
 
-#<p> <strong> UML Diagram</strong>  </p>
-##<p><strong>Class Diagram</strong> </p>
+<palign=center> <strong> UML Diagram</strong>  </p>
+<p><strong>Class Diagram</strong> </p>
 
 <img src="ClassDiagram.png"/>
 
-##<p><strong>Sequence Diagram</strong></p>
+<p><strong>Sequence Diagram</strong></p>
 
 
 <img src="SequenceDiagram.png"/>
